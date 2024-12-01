@@ -35,6 +35,11 @@ $(document).ready(function () {
     url: 'http://0.0.0.0:5001/api/v1/places_search/',
     type: 'POST',
     contentType: 'application/json',
-    dict: {}
+    dict: '{}',
+    success: function (result) {
+      for (let x = 0; x < result.length; x++) {
+        
+      }
+    }
   });
 });
