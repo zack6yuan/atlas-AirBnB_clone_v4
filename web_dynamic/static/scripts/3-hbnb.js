@@ -53,11 +53,13 @@ $(document).ready(function () {
                     <h2>${place.user.first_name} ${place.user.last_name}</h2>
                     <div class="description>
                       <h2>${place.description}</h2>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            `);
+          </article>
+        `);
       }
     },
   });
