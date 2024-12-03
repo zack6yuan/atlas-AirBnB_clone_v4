@@ -39,7 +39,7 @@ $(document).ready(function () {
     success: function (result) {
       for (let x = 0; x < result.length; x++) {
         place = result[x];
-        "section.places".append(`
+        const data = (`
           <article>
             <div class="title_box">
               <h2>${place.name}</h2>
@@ -59,8 +59,10 @@ $(document).ready(function () {
               </div>
             </div>
           </article>
+          }
         `);
+        section.place.append(data);
       }
-    },
-  });
+    }
+  })
 });
