@@ -31,11 +31,11 @@ $(document).ready(function () {
     }
   });
 
+  // AJAX request
   $.ajax({
     url: "http://0.0.0.0:5001/api/v1/places_search/",
     type: "POST",
     contentType: "application/json",
-    result: "{}",
     success: function (result) {
       for (let x = 0; x < result.length; x++) {
         place = result[x];
@@ -61,7 +61,7 @@ $(document).ready(function () {
           </article>
           }
         `);
-        section.place.append(data);
+        ('section.place').append(data);
       }
     }
   })
