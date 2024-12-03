@@ -30,6 +30,7 @@ $(document).ready(function () {
       $("#api_status").removeClass("available");
     }
   });
+  
   // AJAX request
   $('button').click(function() {
     $.ajax({
