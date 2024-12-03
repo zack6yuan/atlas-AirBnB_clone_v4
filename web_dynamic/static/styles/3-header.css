@@ -17,7 +17,7 @@ header .logo {
     background-color: #cccccc;
     border-radius: 50%;
     margin-right: 30px;
-    margin-top: 10px;
+    margin-top: -55px;
   }
   
   #api_status.available {
