@@ -29,7 +29,7 @@ def hbnb():
 
     amenities = storage.all(Amenity).values()
     amenities = sorted(amenities, key=lambda k: k.name)
-
+    # Add cache_id variable to render template
     places = storage.all(Place).values()
     places = sorted(places, key=lambda k: k.name)
     cache_id = uuid.uuid4()

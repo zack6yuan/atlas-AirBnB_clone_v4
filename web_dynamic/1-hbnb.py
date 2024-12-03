@@ -25,7 +25,7 @@ def hbnb():
     amenities = storage.all('Amenity')
     places = storage.all('Place')
     cache_id = uuid.uuid4()
-
+    # Add cache_id variable to render template
     return render_template('1-hbnb.html',
                     states=states,
                     amenities=amenities,
