@@ -7,8 +7,11 @@
   <link rel="stylesheet" type="text/css" href="../static/styles/3-footer.css?cache_id={{ cache_id }}">
   <link rel="stylesheet" type="text/css" href="../static/styles/6-filters.css?cache_id={{ cache_id }}">
   <link type="text/css" rel="stylesheet" href="../static/styles/8-places.css?cache_id={{ cache_id }}">
+  <!-- Add cache_id query string -->
   <link rel="icon" href="../static/images/icon.png?cache_id={{ cache_id }}" />
+  <!-- Import jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Import JavaScript -->
   <script type="text/javascript" src="../static/scripts/1-hbnb.js?cache_id={{ cache_id }}"></script>
   <title>HBnB</title>
 </head>
@@ -43,6 +46,7 @@
           <ul>
             {% for amenity in amenities %}
             <li>
+              <!-- Add checkbox (Retrieve amenity name) -->
               <input type="checkbox" data-id="{{ amenity.id }}" data-name="{{ amenity.name }}"
                 style="margin-right: 10px;">
               {{ amenity.name }}
