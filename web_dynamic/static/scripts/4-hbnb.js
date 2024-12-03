@@ -1,12 +1,12 @@
 #!/usr/bin/node
 /* global $ */
 
-$(document).ready(function () {
+$(document).ready(function() {
   const selectedAmenities = {};
 
-  $('input[type="checkbox"]').change(function () {
-    const amenityId = $(this).data("id");
-    const amenityName = $(this).data("name");
+  $('input[type="checkbox"]').change(function() {
+    const amenityId = $(this).data('id');
+    const amenityName = $(this).data('name');
 
     if (this.checked) {
       selectedAmenities[amenityId] = amenityName;
@@ -14,58 +14,62 @@ $(document).ready(function () {
       delete selectedAmenities[amenityId];
     }
 
-    const amenitiesList = Object.values(selectedAmenities).join(", ");
+    const amenitiesList = Object.values(selectedAmenities).join(', ');
     if (amenitiesList.length > 0) {
-      $("div.amenities > h4").text(amenitiesList);
+      $('div.amenities > h4').text(amenitiesList);
     } else {
-      $("div.amenities > h4").html("&nbsp;");
+      $('div.amenities > h4').html('&nbsp;');
     }
   });
 
   // Check API status
-  $.get("http://0.0.0.0:5001/api/v1/status/", function (data) {
-    if (data.status === "OK") {
-      $("#api_status").addClass("available");
+  $.get('http://0.0.0.0:5001/api/v1/status/', function(data) {
+    if (data.status === 'OK') {
+      $('#api_status').addClass('available');
     } else {
-      $("#api_status").removeClass("available");
+      $('#api_status').removeClass('available');
     }
   });
-  
-  // AJAX request
+
+  // Handle search button click
   $('button').click(function() {
-    $.ajax({
-      url: "http://0.0.0.0:5001/api/v1/places_search/",
-      type: "POST",
-      contentType: "application/json",
-      success: function (result) {
-        for (let x = 0; x < result.length; x++) {
-          place = result[x];
-          const data = (`
-            <article>
-              <div class="title_box">
-                <h2>${place.name}</h2>
-                <div class="price_by_night">
-                  <h2>${place.price_by_night}</h2>
-                  <div class="information">
-                    <h2>${place.max_guest}</h2>
-                    <h2>${place.number_rooms}</h2>
-                    <h2>${place.number_bathrooms}</h2>
-                    <div class="user"></h2>
-                      <h2>${place.user.first_name} ${place.user.last_name}</h2>
-                      <div class="description>
-                        <h2>${place.description}</h2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-            }
-          `);
-          ('section.place').append(data);
-          console.log(result);
-        }
+    const states = [];
+    const cities = [];
+    const amenities = Object.keys(selectedAmenities);
+
+    $('input[type="checkbox"]:checked').each(function() {
+      const id = $(this).data('id');
+      const type = $(this).data('type');
+      if (type === 'state') {
+        states.push(id);
+      } else if (type === 'city') {
+        cities.push(id);
       }
-    })
-  })
+    });
+
+    const searchData = JSON.stringify({
+      states: states,
+      cities: cities,
+      amenities: amenities
+    });
+
+    // AJAX request
+    $.ajax({
+      url: 'http://0.0.0.0:5001/api/v1/places_search/',
+      type: 'POST',
+      contentType: 'application/json',
+      data: searchData,
+      success: function(data) {
+        $('section.places').empty();
+        data.forEach(function(place) {
+          const article = $('<article></article>');
+          article.append('<div class="title_box"><h2>' + place.name + '</h2><div class="price_by_night">$' + place.price_by_night + '</div></div>');
+          article.append('<div class="information"><div class="max_guest">' + place.max_guest + ' Guest' + (place.max_guest !== 1 ? 's' : '') + '</div><div class="number_rooms">' + place.number_rooms + ' Bedroom' + (place.number_rooms !== 1 ? 's' : '') + '</div><div class="number_bathrooms">' + place.number_bathrooms + ' Bathroom' + (place.number_bathrooms !== 1 ? 's' : '') + '</div></div>');
+          article.append('<div class="user"><b>Owner:</b> ' + place.user.first_name + ' ' + place.user.last_name + '</div>');
+          article.append('<div class="description">' + place.description + '</div>');
+          $('section.places').append(article);
+        });
+      }
+    });
+  });
 });
