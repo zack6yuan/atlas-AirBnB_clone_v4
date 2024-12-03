@@ -9,6 +9,7 @@ header .logo {
     left: 20px;
     height: 100%;
 }
+/* api status div */
 #api_status {
     float: right;
     width: 40px;
